@@ -16,7 +16,7 @@
     </div>
   </div>
   <div>
-    <input id="input-fav" type="checkbox" v-on:click="getFav()">
+    <input id="input-fav" type="checkbox" @change="getFav($event)">
     <label for="input-fav">Favoris seulement</label>
   </div>
   <hr />
@@ -51,6 +51,8 @@ export default {
       search: '',
       category: '',
       categories: [],
+      onlyFav: false,
+      favId: [],
     };
   },
   methods: {
@@ -79,12 +81,23 @@ export default {
 
       console.log(cat);
     },
-    getFav() {
-     
+    getFav(event) {
+      if (!event.target.checked) {
+        this.onlyFav = false;
+        return;
+      }
+      UserService.getFav(this.$store.state.auth.user.id)
+        .then((response) => {
+          this.favId = response.data;
+        });
+      this.onlyFav = true;
     },
-    addFav(id) {
-      axios
-        .put('http://localhost:8080/likeFav/' + idU + id, { fav: 1})
+    addFav(idP) {
+      let fav = {
+        articleid: idP,
+        fav: 1,
+      };
+      UserService.putFav(this.$store.state.auth.user.id, idP, fav)
         .then(function (response) {
           console.log(response);
         })
@@ -107,7 +120,15 @@ export default {
         let valid = false;
         if (p.title.toLowerCase().indexOf(this.search.toLowerCase()) != -1)
           valid = true;
-        // return valid;
+        if (valid && this.onlyFav) {
+          for (let i = 0; i < this.favId.length; i++) {
+            if (p.id == this.favId[i].articleId) {
+              valid = true;
+              break;
+            }
+            else valid = false;
+          }
+        }
         if (this.category == '' || this.category == 'None') return valid;
         if (valid && p.categories.includes(this.category))
           return true;
