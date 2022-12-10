@@ -31,6 +31,14 @@ class UserService {
   postArticle(article) {
     return axios.post(API_URL + 'article/add', article, { headers: authHeader() });
   }
+
+  getFav(idU) {
+    return axios.get(API_URL + 'user/fav/' + idU, { headers: authHeader() });
+  }
+
+  putFav(idU, idP, fav) {
+    return axios.put(API_URL + 'likeFav/' + idU + '/' + idP, fav, { headers: authHeader() });
+  }
 }
 
 export default new UserService();
