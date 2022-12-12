@@ -11,9 +11,9 @@ router.use(function(req, res, next) {
     next();
   });
 
-router.get('/all', categoryController.getAllCategory)
+router.get('/', categoryController.getAllCategory)
 
-router.post('/add', [authJwt.verifyToken, authJwt.isAdmin], categoryController.addCategory)
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin], categoryController.addCategory)
 
 // dynamic
 

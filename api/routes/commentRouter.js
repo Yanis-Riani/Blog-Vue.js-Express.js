@@ -11,7 +11,7 @@ router.use(function(req, res, next) {
     next();
   });
 
-router.post('/add/:articleid', [authJwt.verifyToken], commentController.addComment)
+router.post('/:articleid', [authJwt.verifyToken], commentController.addComment)
 
 // dynamic
 
