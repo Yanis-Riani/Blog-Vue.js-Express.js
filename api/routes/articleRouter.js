@@ -18,15 +18,15 @@ router.get('/all', articleController.getAllArticle)
 
 router.post('/add', [authJwt.verifyToken, authJwt.isAdmin], articleController.addArticle)
 
-router.get('/category/:id', [authJwt.verifyToken], articleController.getArticleWithCategory)
+router.get('/category/:id', articleController.getArticleWithCategory)
 
 // dynamic
 
 router.get('/:id', articleController.getArticle)
 
-router.get('/like/:id', [authJwt.verifyToken], likefavContoller.getArticleLike)
+router.get('/like/:id', likefavContoller.getArticleLike)
 
-router.get('/comment/:id', [authJwt.verifyToken], commentController.getArticleComment)
+router.get('/comment/:id', commentController.getArticleComment)
 
 router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin], articleController.updateArticle)
 
