@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Articles from './components/Articles.vue';
+import Article from './components/Article.vue';
 import NewArticle from './components/ArticleCreation.vue';
 import NewCategory from './components/AddCategory.vue';
 import Login from './components/Login.vue';
@@ -14,6 +15,11 @@ const routes = [
     name: 'Articles',
     component: Articles,
   },
+    {
+      path: '/article/:id',
+      name: 'Article',
+      component: Article,
+    },
   {
     path: '/login',
     component: Login,
@@ -48,7 +54,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/login', '/register'];
+  const publicPages = ['/', '/login', '/register', '/article/:id'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 
