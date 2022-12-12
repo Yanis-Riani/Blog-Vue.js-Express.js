@@ -11,9 +11,9 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.get('/like/global', [authJwt.verifyToken], likefavContoller.getLikeGlobal)
+router.get('/', [authJwt.verifyToken], likefavContoller.getLikeGlobal)
 
-router.post('/add', [authJwt.verifyToken], likefavContoller.addLikeFav)
+router.post('/', [authJwt.verifyToken], likefavContoller.addLikeFav)
 
 // dynamic
 

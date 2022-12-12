@@ -14,19 +14,17 @@ router.use(function(req, res, next) {
     next();
   });
 
-router.get('/all', articleController.getAllArticle)
+router.get('/', articleController.getAllArticle)
 
-router.post('/add', [authJwt.verifyToken, authJwt.isAdmin], articleController.addArticle)
-
-router.get('/category/:id', articleController.getArticleWithCategory)
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin], articleController.addArticle)
 
 // dynamic
 
 router.get('/:id', articleController.getArticle)
 
-router.get('/like/:id', likefavContoller.getArticleLike)
+router.get('/likes/:id', likefavContoller.getArticleLike)
 
-router.get('/comment/:id', commentController.getArticleComment)
+router.get('/comments/:id', commentController.getArticleComment)
 
 router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin], articleController.updateArticle)
 

@@ -22,7 +22,7 @@ const Role = db.role;
 
 db.sequelize.sync({force: false})
 .then(() => {
-    console.log('re-sync done')
+  console.log('re-sync done')
 })
 
 function initial() {
@@ -30,7 +30,7 @@ function initial() {
     id: 1,
     name: "user"
   });
- 
+  
   Role.create({
     id: 2,
     name: "admin"
