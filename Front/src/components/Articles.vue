@@ -26,7 +26,7 @@
   <hr />
   <div v-if="isLoading" class="lds-dual-ring"></div>
   <div v-for="p in filteredPosts" :key="p.id" class="article-wrapper">
-    <h2>{{ p.id }} - {{ p.title }}</h2>
+    <a v-bind:href="'/article/'+p.id"><h2>{{ p.id }} - {{ p.title }}</h2></a>
     <div class="category">
       <p class="p-category" v-for="c in p.categories" :key="c.id">{{ c }}</p>
     </div>
