@@ -1,7 +1,10 @@
 <template>
+  <section id="search-section">
   <div class="search-wrapper panel-heading col-sm-12">
     <input type="text" v-model="search" placeholder="Rechercher" id="searchbar"/>
   </div>
+  </section>
+  <section>
   <div class="heading">
     <div class="li-categories">
       <p id="title-categories">Catégorie : </p>
@@ -19,9 +22,10 @@
     <input id="input-fav" type="checkbox" @change="getFav($event)">
     <label for="input-fav">Favoris seulement</label>
   </div>
+  </section>
   <hr />
   <div v-if="isLoading" class="lds-dual-ring"></div>
-  <div v-for="p in filteredPosts" :key="p.id">
+  <div v-for="p in filteredPosts" :key="p.id" class="article-wrapper">
     <h2>{{ p.id }} - {{ p.title }}</h2>
     <div class="category">
       <p class="p-category" v-for="c in p.categories" :key="c.id">{{ c }}</p>
@@ -159,10 +163,16 @@ a {
   color: #42b983;
 }
 
+#search-section {
+  margin-top: 40px;
+  margin-left: -40px;
+  margin-right: -40px;
+}
 .search-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: auto;
   margin-bottom: 40px;
 }
 
@@ -174,7 +184,80 @@ a {
   border-radius: 4px;
   outline: none;
 }
-
+.article-wrapper {
+  margin-bottom: 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.article-wrapper h2 {
+  margin: 0 0 20px;
+}
+.article-wrapper p {
+  margin: 0 0 10px;
+}
+.article-wrapper p:last-child {
+  margin-bottom: 0;
+} 
+.article-wrapper .category {
+  margin-bottom: 20px;
+}
+.article-wrapper .category p {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  padding: 5px 10px;
+  background-color: #42b983;
+  color: white;
+  border-radius: 4px;
+}
+.article-wrapper .category p:last-child {
+  margin-right: 0;
+}
+.article-wrapper .category p:hover {
+  background-color: #2b7a57;
+}
+.article-wrapper .category p:active {
+  background-color: #2b7a57;
+}
+.article-wrapper .category p:focus {
+  background-color: white;
+  color: #42b983;
+  border: 1px solid #42b983;
+}
+.article-wrapper .category p:active {
+  background-color: #2b7a57;
+}
+.article-wrapper .category p:disabled {
+  background-color: #ccc;
+  color: white;
+  cursor: not-allowed;
+}
+.article-wrapper .category p:disabled:hover {
+  background-color: #ccc;
+}
+.article-wrapper .category p:disabled:active {
+  background-color: #ccc;
+}
+.article-wrapper .category p:disabled:focus {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #ccc;
+}
+.article-wrapper .category p:disabled:active {
+  background-color: #ccc;
+}
+.article-wrapper .category p:disabled:focus {
+  background-color: #ccc;
+  color: white;
+  border: 1px solid #ccc;
+}
+.article-wrapper .category p:disabled:active {
+  background-color: #ccc;
+}
+.article-wrapper:hover{
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+  background-color: aquamarine;
+}
 .heading {
   display: flex;
   justify-content: space-between;
