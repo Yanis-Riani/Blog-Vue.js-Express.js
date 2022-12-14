@@ -12,11 +12,14 @@ class UserService {
     return axios.get(API_URL + 'user/', { headers: authHeader() });
   }
 
-  getArticles(id = null) {
+  getArticle(id) { //id = id de l'article
+    return axios.get(API_URL + 'article/' + id, { headers: authHeader() });
+  }
+
+  getArticles(id = null) { //id = id de la catégorie
     if (!id) {
       return axios.get(API_URL + 'article/', { headers: authHeader() });
     }
-    console.log('id', id);
     return axios.get(API_URL + 'article/category/' + id, { headers: authHeader() });
   }
 

@@ -31,10 +31,11 @@
       <div class="category">
         <p class="p-category" v-for="c in p.categories" :key="c.id">{{ c }}</p>
       </div>
-      <div v-html="p.content"></div>
+      <div v-html="getBeggining(p.content)"></div>
       <div>
         <div>
           <button class="addFav" v-on:click="addFav(p.id)">Ajouter aux favoris</button>
+          <router-link :to="{ name: 'Article', params: { id: p.id }}">Lire Plus</router-link>
         </div>
         <!-- <div>
           <button class="readMore" v-on:click="readMore(p.id)">Lire plus</button>
@@ -83,9 +84,6 @@ export default {
         this.category = cat.name;
         this.getPosts(cat.id);
       }
-      
-      
-      console.log(cat);
     },
     getFav(event) {
       if (!event.target.checked) {
@@ -111,14 +109,13 @@ export default {
         console.log(error);
       });
     },
-    // readMore(id) {
-      //   fetch('http://localhost:8080/article/' + id)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-        //     this.post[data.id].content = data.content
-        //   });
-        // }
-      },
+    getBeggining(content) {
+      let res = content.split(' ', 50);
+      let res2 = res.join(' ');
+      if (res2.length < content.length) res2 += '...';
+      return res2;
+    },
+  },
       computed: {
         //searchBar
         filteredPosts() {
@@ -142,7 +139,7 @@ export default {
           });
         },
       },
-      mounted() {
+      created () {
         this.getPosts();
         this.getCat();
       },
