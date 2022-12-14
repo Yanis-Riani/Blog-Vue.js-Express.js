@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         email: {
-            type: DataTypes.STRING
-        },
+            type: DataTypes.STRING,
+            isEmail: true
+        }
     })
 
     return User

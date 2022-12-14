@@ -5,31 +5,31 @@ const API_URL = 'http://localhost:8080/';
 
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + 'all');
+    return axios.get(API_URL + '');
   }
 
   getAdminBoard() {
-    return axios.get(API_URL + 'user/all', { headers: authHeader() });
+    return axios.get(API_URL + 'user/', { headers: authHeader() });
   }
 
   getArticles(id = null) {
     if (!id) {
-      return axios.get(API_URL + 'article/all', { headers: authHeader() });
+      return axios.get(API_URL + 'article/', { headers: authHeader() });
     }
     console.log('id', id);
     return axios.get(API_URL + 'article/category/' + id, { headers: authHeader() });
   }
 
   getCategories() {
-    return axios.get(API_URL + 'category/all', { headers: authHeader() });
+    return axios.get(API_URL + 'category/', { headers: authHeader() });
   }
 
   addCategory(category) {
-    return axios.post(API_URL + 'category/add', category, { headers: authHeader() });
+    return axios.post(API_URL + 'category/', category, { headers: authHeader() });
   }
 
   postArticle(article) {
-    return axios.post(API_URL + 'article/add', article, { headers: authHeader() });
+    return axios.post(API_URL + 'article/', article, { headers: authHeader() });
   }
 
   getFav(idU) {
