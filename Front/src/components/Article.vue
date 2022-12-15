@@ -6,37 +6,120 @@
     </div>
     <div class="content" v-html="article.content"></div>
   </div>
+  
+  <section class="comment-like">
+    <div class="comment">
+      <h2>Commentaires</h2>
+      <div class="comment-post">
+        <div ref="editor" class="quillEditor"></div>
+        <button class="PushButton" v-on:click="SaveComment">
+        Publier le commentaire
+        </button>
+        <p v-html="info"></p>
+      </div>
+      <div class="comment-wrapper">
+        <div class="comment-item" v-for="c in comments" :key="c.id">
+          <div class="comment-header">
+            <p class="comment-author">{{ c.creator }} - {{ c.createdAt }}</p>
+          </div>
+          <div class="comment-content">
+            <div v-html="c.content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
+
+<script>
+import Quill from 'quill';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import UserService from '../services/user.service';
+export default {
+  name: 'Article',
+  props: {
+    modelValue: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      id: null,
+      article: [],
+      comments: null,
+      editor: null,
+    };
+  },
   
-  <script>
-  import UserService from '../services/user.service';
-  export default {
-    name: 'Article',
-
-    data() {
-        return {
-            id: null,
-            article: null,
-        };
+  created() {
+    this.id = this.$route.params.id;
+    this.getArticle();
+    this.getComments();
+  },
+  
+  mounted() {
+    this.editor = new Quill(this.$refs.editor, {
+      modules: {
+        toolbar: [
+        ['bold', 'italic', 'underline'],
+        [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        ],
+        ['link'],
+        ],
+      },
+      placeholder: "Contenu du commentaire",
+      theme: 'snow',
+      formats: ['bold', 'underline', 'header', 'italic', 'link'],
+    });
+    this.editor.root.innerHTML = this.modelValue;
+  },
+  
+  methods: {
+    getArticle() {
+      UserService.getArticle(this.id)
+      .then((response) => {
+        this.article = response.data;
+      });
     },
-
-    created() {
-        this.id = this.$route.params.id;
-        this.getArticle();
-    },
-
-    methods: {
-        getArticle() {
-            UserService.getArticle(this.id)
-            .then((response) => {
-                this.article = response.data;
-            });
+    getComments() {
+      UserService.getComments(this.id)
+      .then((response) => {
+        this.comments = response.data;
+        for (var i = 0; i < this.comments.length; i++) {
+          Object.assign(this.comments[i], {creator: this.idToUser(this.comments[i].id)})
         }
-    }
-  };
-  </script>
-  
- 
+      });
+    },
+    idToUser(id) {
+      UserService.getUser(id)
+      .then((response) => {
+        console.log(response);
+        return response.data.username;
+      });
+    },
+    SaveComment: function () {
+      var comment = {
+        content: this.editor.root.innerHTML,
+        creator: this.$store.state.auth.user.id,
+      };
+        UserService.postComment(comment, this.id)
+        .then(function (response) {
+          console.log(response);
+          this.info = '<p>Commentaire publié</p>';
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+  }
+};
+</script>
+
+
 <style scoped>
 .article {
   margin: 0 auto;
@@ -67,5 +150,18 @@
   line-height: 1.5em;
 }
 
+.quillEditor {
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.comment-item {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 </style>
-  

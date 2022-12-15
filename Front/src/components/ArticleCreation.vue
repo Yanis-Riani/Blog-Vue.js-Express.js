@@ -15,17 +15,16 @@
     
   </form>
   <div ref="editor" class="quillEditor"></div>
-    <button class="PushButton" v-on:click="SaveArticle">
-      Publier l'article
-    </button>
-    <p v-html="info"></p>
+  <button class="PushButton" v-on:click="SaveArticle">
+    Publier l'article
+  </button>
+  <p v-html="info"></p>
 </template>
 
 <script>
 import axios from 'axios';
 import Quill from 'quill';
 import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.snow.css';
 import UserService from '../services/user.service';
 
@@ -65,14 +64,14 @@ export default {
       modules: {
         toolbar: [
           ['bold', 'italic', 'underline'],
-          [{ header: '1' }, { header: '2' }, { header: '3' }],
+          [{ header: '1' }, { header: '2' }],
           [
             { list: 'ordered' },
             { list: 'bullet' },
             { indent: '-1' },
             { indent: '+1' },
           ],
-          ['link', 'image'],
+          ['link'],
         ],
       },
       placeholder: "Contenu de l'article",

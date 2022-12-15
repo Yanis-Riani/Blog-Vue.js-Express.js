@@ -35,11 +35,8 @@
       <div>
         <div>
           <button class="addFav" v-on:click="addFav(p.id)">Ajouter aux favoris</button>
-          <router-link :to="{ name: 'Article', params: { id: p.id }}">Lire Plus</router-link>
+          <router-link :to="{ name: 'Article', params: { id: p.id }}" class="readmore">Lire Plus</router-link>
         </div>
-        <!-- <div>
-          <button class="readMore" v-on:click="readMore(p.id)">Lire plus</button>
-        </div> -->
       </div>
     </div>
   </section>
@@ -347,20 +344,13 @@ export default {
     margin: 0 10px;
     color: #42b983;
   }
-  
-  .readMore {
-    background-color: #42b983;
-    color: white;
+.readmore {
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 1.1em;
-  }
-  
-  .readMore:hover {
-    background-color: #2b7a57;
-  }
+  }  
   
   @keyframes lds-dual-ring {
     0% {
