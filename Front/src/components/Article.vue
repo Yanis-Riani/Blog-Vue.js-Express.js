@@ -8,12 +8,15 @@
   </div>
   
   <section class="comment-like">
+    <!-- <div class="like">
+      <button v-on:click="Like">Liker</button><div>0</div>
+    </div> -->
     <div class="comment">
       <h2>Commentaires</h2>
       <div class="comment-post">
         <div ref="editor" class="quillEditor"></div>
         <button class="PushButton" v-on:click="SaveComment">
-        Publier le commentaire
+          Publier le commentaire
         </button>
         <p v-html="info"></p>
       </div>
@@ -50,6 +53,7 @@ export default {
       article: [],
       comments: null,
       editor: null,
+      like: 0
     };
   },
   
@@ -89,34 +93,25 @@ export default {
       UserService.getComments(this.id)
       .then((response) => {
         this.comments = response.data;
-        for (var i = 0; i < this.comments.length; i++) {
-          Object.assign(this.comments[i], {creator: this.idToUser(this.comments[i].id)})
-        }
-      });
+      })
     },
-    idToUser(id) {
-      UserService.getUser(id)
-      .then((response) => {
-        console.log(response);
-        return response.data.username;
-      });
-    },
-    SaveComment: function () {
+    SaveComment() {
       var comment = {
         content: this.editor.root.innerHTML,
         creator: this.$store.state.auth.user.id,
       };
-        UserService.postComment(comment, this.id)
-        .then(function (response) {
-          console.log(response);
-          this.info = '<p>Commentaire publié</p>';
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      UserService.postComment(comment, this.id)
+      .then(function (response) {
+        console.log(response);
+        this.info = '<p>Commentaire publié</p>';
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
-  }
-};
+  },
+}
+
 </script>
 
 
@@ -163,5 +158,11 @@ export default {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.like {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px 0;
 }
 </style>

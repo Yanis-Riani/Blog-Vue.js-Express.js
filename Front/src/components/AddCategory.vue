@@ -9,7 +9,6 @@
   </template>
   
   <script>
-  import axios from 'axios';
   import Quill from 'quill';
   import 'quill/dist/quill.core.css';
   import 'quill/dist/quill.bubble.css';
@@ -23,11 +22,11 @@
       };
     },
     methods: {
-      AddCat: function () {
+      AddCat() {
         var cat = {'name': document.getElementById('cat').value};
           UserService.addCategory(cat)
-          .then(function (response) {
-            console.log(response);
+          .then((response) => {
+            this.$router.push('/');
           })
           .catch(function (error) {
             console.log(error);

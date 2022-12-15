@@ -18,11 +18,9 @@
   <button class="PushButton" v-on:click="SaveArticle">
     Publier l'article
   </button>
-  <p v-html="info"></p>
 </template>
 
 <script>
-import axios from 'axios';
 import Quill from 'quill';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
@@ -41,7 +39,7 @@ export default {
       editor: null,
       authors: null,
       categories: [],
-      info: '',
+      info: null,
     };
   },
   mounted() {
@@ -82,8 +80,7 @@ export default {
   },
 
   methods: {
-    // Creattion of JSON Object + POST in DB when button is clicked
-    SaveArticle: function () {
+    SaveArticle() {
       var selectCategory = document.getElementById('category');
 
       var article = {
@@ -93,9 +90,8 @@ export default {
         creator: this.$store.state.auth.user.id,
       };
         UserService.postArticle(article)
-        .then(function (response) {
-          console.log(response);
-          this.info = '<p>Article publié</p>';
+        .then((response) => {
+          this.$router.push('/');
         })
         .catch(function (error) {
           console.log(error);

@@ -90,6 +90,7 @@ export default {
       UserService.getFav(this.$store.state.auth.user.id)
       .then((response) => {
         this.favId = response.data;
+        console.log(this.favId);
       });
       this.onlyFav = true;
     },
@@ -110,7 +111,8 @@ export default {
       let res = content.split(' ', 50);
       let res2 = res.join(' ');
       if (res2.length < content.length) res2 += '...';
-      return res2;
+      console.log(res2)
+      return res2.replaceAll("<h1>", " ").replaceAll("</h1>", " ").replaceAll("<h2>", " ").replaceAll("</h2>", " ");
     },
   },
       computed: {
@@ -249,10 +251,6 @@ export default {
   }
   .article-wrapper .category p:disabled:active {
     background-color: #ccc;
-  }
-  .article-wrapper:hover{
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-    background-color: aquamarine;
   }
   .heading {
     display: flex;
