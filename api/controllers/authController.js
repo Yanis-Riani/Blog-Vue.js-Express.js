@@ -11,7 +11,6 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
   // Save User to Database
-  console.log(req.body.roles)
   if(req.body.roles.includes("admin")){
     res.status(400).send({message: "Cannot set admin role"})
   } else {
