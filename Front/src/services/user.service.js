@@ -43,6 +43,14 @@ class UserService {
     return axios.put(API_URL + 'likeFav/' + idU + '/' + idP, fav, { headers: authHeader() });
   }
 
+  getLike(idP) {
+    return axios.get(API_URL + 'article/like/' + idP, { headers: authHeader() });
+  }
+
+  putlike(idU, idP, like) {
+    return axios.put(API_URL + 'likeFav/' + idU + '/' + idP, like, { headers: authHeader() });
+  }
+
   getComments(id) {
     return axios.get(API_URL + 'article/comments/' + id, { headers: authHeader() });
   }

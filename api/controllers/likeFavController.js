@@ -54,6 +54,7 @@ const getUserFav = async (req, res) => {
 // 5. update like and fav
 
 const CreateupdateLikeFav = async (req, res) => {
+    console.log(req);
     const userid = req.params.userid;
     const articleid = req.params.articleid;
     const exit = await LikeFav.findOne({where: {userId: userid, articleId: articleid} });
@@ -67,6 +68,9 @@ const CreateupdateLikeFav = async (req, res) => {
             like: req.body.like, 
             fav: req.body.fav
         })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+          });
         res.status(200).send(like);
     }
 

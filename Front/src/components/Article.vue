@@ -11,6 +11,9 @@
     <!-- <div class="like">
       <button v-on:click="Like">Liker</button><div>0</div>
     </div> -->
+    <div class="like">
+      <button v-on:click="Like">Liker</button><div>{{ like }}</div>
+    </div>
     <div class="comment">
       <h2>Commentaires</h2>
       <div class="comment-post">
@@ -35,6 +38,7 @@
 </template>
 
 <script>
+import { tSMethodSignature } from '@babel/types';
 import Quill from 'quill';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
@@ -61,6 +65,7 @@ export default {
     this.id = this.$route.params.id;
     this.getArticle();
     this.getComments();
+    this.getLike();
   },
   
   mounted() {
@@ -109,6 +114,23 @@ export default {
         console.log(error);
       });
     },
+    getLike() {
+      UserService.getLike(this.id)
+      .then((response) => {
+        this.like = response.data.like;
+      })
+    },
+    Like() {
+      if (this.like == 1) {
+        var val = 0;
+      } else {
+        var val = 1;
+      }
+      UserService.putLike(this.$store.state.auth.user.i, this.id, {like: val})
+      .then((response) => {
+        this.like = response.data.like;
+      })
+    }
   },
 }
 

@@ -83,7 +83,9 @@ db.comment.belongsTo(db.user, {
 // Foreign key of favlike with article and user
 
 db.article.hasMany(db.favLike, {foreignKey : "articleid"})
+db.favLike.belongsTo(db.article)
 db.user.hasMany(db.favLike, {foreignKey : "userid"})
+db.favLike.belongsTo(db.user)
 
 db.ROLES = ["user", "admin"];
 console.log(db.ROLES)
